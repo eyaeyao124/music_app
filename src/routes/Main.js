@@ -4,7 +4,7 @@ import Music from "../components/Music_list";
 import Sort from "../components/Sort";
 import Search from "../components/Search";
 
-import {Container, Row, Col, CardDeck} from 'react-bootstrap';
+import {Container, Row, Col, CardDeck, Spinner} from 'react-bootstrap';
 
 function Main() {
     const [loading, setLoading] = useState(true)
@@ -56,7 +56,11 @@ function Main() {
     return(
         <div className="main-container">
             {loading?
-            <div>loading...</div>
+            <div className="loader">
+                <Spinner animation="border" role="status">
+                    <span className="sr-only">Loading...</span>
+                </Spinner>
+            </div>
             :
             <div>
                 <Container>
