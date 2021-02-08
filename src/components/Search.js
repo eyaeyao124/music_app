@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import {InputGroup,FormControl,Button} from 'react-bootstrap'
 
 function Search({searchFunc}) {
     const [text, setText] = useState("")
@@ -14,8 +15,17 @@ function Search({searchFunc}) {
     return (
         <div>
             <form onSubmit={onSubmitText}>
-                <input  type="text" placeholder="앨범명을 적어주세요" value={text} onChange={textHandler}/>
-                <button>검색</button>
+            <InputGroup className="mb-3" size="lg">
+                <FormControl
+                placeholder="앨범명을 적어주세요"
+                aria-label="앨범명을 적어주세요"
+                aria-describedby="basic-addon2"
+                value={text} onChange={textHandler}
+                />
+                <InputGroup.Append>
+                <Button variant="secondary">검색</Button>
+                </InputGroup.Append>
+            </InputGroup>
             </form>
         </div>
     )

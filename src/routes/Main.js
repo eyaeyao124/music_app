@@ -4,6 +4,8 @@ import Music from "../components/Music_list";
 import Sort from "../components/Sort";
 import Search from "../components/Search";
 
+import {Container, Row, Col, CardDeck} from 'react-bootstrap';
+
 function Main() {
     const [loading, setLoading] = useState(true)
     const [basicList, setBasicList] = useState([])
@@ -50,27 +52,34 @@ function Main() {
     useEffect(()=>{
         getMusic()
     },[]);
-    console.log(basicList)
+
     return(
-        <div>
+        <div className="main-container">
             {loading?
             <div>loading...</div>
             :
             <div>
-                <Search searchFunc={searchMusic}/>
-                <Sort sortFunc={sortMusic} descendingFunc={descendingMusic}/>
-                {musicList.map(music=>{
-                    return <Music
-                    key={music.id.attributes["im:id"]} 
-                    id={music.category.attributes["im:id"]}
-                    category={music.category.attributes.label}
-                    artist={music["im:artist"].label}
-                    name={music["im:name"].label}
-                    image={music["im:image"][2].label}
-                    title={music.title.label}
-                    price={music["im:price"].label}
-                    />
-                })}
+                <Container>
+                <Row>   
+                    <Col sm={8}><Search searchFunc={searchMusic}/></Col>
+                    <Col sm={4}><Sort sortFunc={sortMusic} descendingFunc={descendingMusic}/></Col>
+                </Row>
+                <CardDeck>
+                    {musicList.map(music=>{
+                        return <Music
+                        key={music.id.attributes["im:id"]} 
+                        id={music.category.attributes["im:id"]}
+                        category={music.category.attributes.label}
+                        artist={music["im:artist"].label}
+                        name={music["im:name"].label}
+                        image={music["im:image"][2].label}
+                        title={music.title.label}
+                        price={music["im:price"].label}
+                        release={music["im:releaseDate"].attributes.label}
+                        />
+                    })} 
+                </CardDeck>
+                </Container>
             </div>
             }
         </div>
