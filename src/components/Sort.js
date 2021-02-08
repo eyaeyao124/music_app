@@ -3,7 +3,7 @@ function Sort({sortFunc, descendingFunc}) {
     return (
         <div>
             <div>
-                 <label for="descending"> 낮은순
+                 <label htmlFor="descending"> 낮은순
                      <input id="descending" type="checkbox" value="down" onChange={(e)=>descendingFunc(e.target.checked)}/>
                  </label>
             </div>

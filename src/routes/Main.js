@@ -2,12 +2,14 @@ import React, {useState, useEffect} from "react"
 import Axios from "axios";
 import Music from "../components/Music_list";
 import Sort from "../components/Sort";
+import Search from "../components/Search";
 
 function Main() {
     const [loading, setLoading] = useState(true)
     const [basicList, setBasicList] = useState([])
     const [musicList, setMusicList] = useState([])
     const [musicSort, setMusicSort] = useState(null)
+    const [searchText, setSearchText] = useState("")
     
     const getMusic = async() => {
         const {data:{feed:{entry}}} = await Axios.get("https://itunes.apple.com/us/rss/topalbums/limit=100/json");
@@ -32,16 +34,30 @@ function Main() {
         setMusicList(musicList.reverse())
     }
 
+    const searchMusic = (name) => {
+        setSearchText(name)
+        if(name != "") {
+            const filterText = basicList.filter((element)=>{
+                return element["im:name"].label.toLowerCase().replace(/ /gi, "").includes(name.toLowerCase().replace(/ /gi, ""));
+            })
+            setMusicList(filterText)
+        }else{
+            setMusicList(basicList)
+        }
+        
+    }
+
     useEffect(()=>{
         getMusic()
     },[]);
-    console.log(musicList)
+    console.log(basicList)
     return(
         <div>
             {loading?
             <div>loading...</div>
             :
             <div>
+                <Search searchFunc={searchMusic}/>
                 <Sort sortFunc={sortMusic} descendingFunc={descendingMusic}/>
                 {musicList.map(music=>{
                     return <Music
