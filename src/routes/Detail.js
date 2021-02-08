@@ -1,23 +1,30 @@
 import React, {useEffect} from "react"
 
-function Detail({history, location:{state}, location:{state:{artist, category, image, name, price, title}}}) {
+//function Detail({history, location:{state}, location:{state:{artist, category, image, name, price, title}}}) {
+function Detail(props) {
+
 
     useEffect(()=>{
-        if (state === undefined) {
-            history.push("/");
+        if (props.location.state === undefined) {
+            props.history.push("/");
           }
      },[]);
 
-    return(
-        <div>
-            <div><img src={image} alt={title} title={title} /></div>
+
+     if (props.location.state) {
+        return(
             <div>
-                <div>{name}</div>
-                <div>{artist}</div>
-                <div>{category} | {price}</div>
+                <div><img src={props.location.state.image} alt={props.location.state.title} title={props.location.state.title} /></div>
+                <div>
+                    <div>{props.location.state.name}</div>
+                    <div>{props.location.state.artist}</div>
+                    <div>{props.location.state.category} | {props.location.state.price}</div>
+                </div>
             </div>
-        </div>
-    )
+        )
+      } else {
+        return null;
+      }
 }
 
 export default Detail;
